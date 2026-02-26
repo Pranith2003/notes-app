@@ -36,7 +36,12 @@ import { deleteNotebook } from "@/server/notebooks";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   Dialog,
   DialogContent,
@@ -60,6 +65,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import AvatarGroupMaxDemo from "./shadcn-studio/avatar/avatar-14";
+import { formatRelativeDate } from "@/utils/date-formater";
 interface NotebookCardProps {
   notebook: Notebook;
 }
@@ -305,15 +311,26 @@ export default function NotebookCard({ notebook }: NotebookCardProps) {
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <p>{notebook.notes?.length ?? 0} notes</p>
+      <CardContent className="flex justify-between items-end">
+        <p className="text-sm">{notebook.notes?.length ?? 0} notes</p>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <p className="text-xs text-muted-foreground cursor-default">
+                {formatRelativeDate(notebook.createdAt)}
+              </p>
+            </TooltipTrigger>
+            <TooltipContent>
+              {notebook.createdAt.toLocaleString()}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <AvatarGroupMaxDemo />
         <Link href={`/dashboard/notebook/${notebook.id}`}>
           <Button variant="outline">View</Button>
         </Link>
-
         <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" disabled={isDeleting}>

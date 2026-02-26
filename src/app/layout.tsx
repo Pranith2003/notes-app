@@ -33,15 +33,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NuqsAdapter>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Toaster position="bottom-right" />
-          <TooltipProvider>{children}</TooltipProvider>
-        </ThemeProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Toaster position="bottom-right" />
+            <TooltipProvider>{children}</TooltipProvider>
+          </ThemeProvider>
         </NuqsAdapter>
       </body>
     </html>
