@@ -54,13 +54,18 @@ export default function NoteCard({ note }: NotebookCardProps) {
     }
   };
 
+  const handleNoteShare = async () => {};
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>
           <div className="flex items-center justify-between">
             <p>{note.title}</p>
-            <div className="hover:cursor-pointer hover:bg-muted p-2 hover:rounded">
+            <div
+              className="hover:cursor-pointer hover:bg-muted p-2 hover:rounded"
+              onClick={handleNoteShare}
+            >
               <Share2 className="size-5" />
             </div>
           </div>
