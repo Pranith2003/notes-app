@@ -34,7 +34,7 @@ export function SidebarData({ data }: SidebarDataProps) {
       .includes(search.toLowerCase());
 
     const noteMatches = item.items.some((note) =>
-      note.title.toLowerCase().includes(search.toLowerCase())
+      note.title.toLowerCase().includes(search.toLowerCase()),
     );
 
     return notebookMatches || noteMatches;

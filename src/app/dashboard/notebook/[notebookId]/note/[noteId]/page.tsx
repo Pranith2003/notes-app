@@ -1,6 +1,7 @@
 import { PageWrapper } from "@/components/page-wrapper";
 import RichTextEditor from "@/components/rich-text-editor";
 import { getNoteById } from "@/server/notes";
+import { formatRelativeDate } from "@/utils/date-formater";
 import { JSONContent } from "@tiptap/react";
 
 type Params = Promise<{
@@ -9,7 +10,6 @@ type Params = Promise<{
 
 export default async function NotePage({ params }: { params: Params }) {
   const { noteId } = await params;
-
   const { note } = await getNoteById(noteId);
 
   return (
@@ -23,11 +23,25 @@ export default async function NotePage({ params }: { params: Params }) {
         { label: note?.title ?? "Note", href: `/dashboard/note/${noteId}` },
       ]}
     >
-      <h1>{note?.title}</h1>
-      <RichTextEditor
-        content={note?.content as JSONContent[]}
-        noteId={noteId}
-      />
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2 border-b pb-4">
+          <h1 className="text-3xl font-semibold tracking-tight">
+            {note?.title}
+          </h1>
+          <p
+            className="text-sm text-muted-foreground"
+            title={note?.updatedAt.toLocaleString()}
+          >
+            Last updated {note?.updatedAt && formatRelativeDate(note.updatedAt)}
+          </p>
+        </div>
+        <div className="pt-2">
+          <RichTextEditor
+            content={note?.content as JSONContent[]}
+            noteId={noteId}
+          />
+        </div>
+      </div>
     </PageWrapper>
   );
 }

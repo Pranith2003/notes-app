@@ -50,7 +50,6 @@ export type InsertNoteBooks = typeof notebooks.$inferInsert;
 export type Note = typeof notes.$inferSelect;
 export type InsertNotes = typeof notes.$inferInsert;
 
-
 export type Notebook = typeof notebooks.$inferSelect & {
   notes: Note[];
 };

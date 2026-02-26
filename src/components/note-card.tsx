@@ -26,6 +26,13 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { deleteNote } from "@/server/notes";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+import { formatRelativeDate } from "@/utils/date-formater";
 
 interface NotebookCardProps {
   note: Note;
@@ -71,12 +78,22 @@ export default function NoteCard({ note }: NotebookCardProps) {
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent className="flex justify-between items-end">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <p className="text-xs text-muted-foreground cursor-default">
+                {formatRelativeDate(note.createdAt)}
+              </p>
+            </TooltipTrigger>
+            <TooltipContent>{note.createdAt.toLocaleString()}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <Link href={`/dashboard/notebook/${note.notebookId}/note/${note.id}`}>
           <Button variant="outline">View</Button>
         </Link>
-
         <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" disabled={isDeleting}>

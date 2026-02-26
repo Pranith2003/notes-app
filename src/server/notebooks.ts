@@ -97,7 +97,6 @@ export const updateNoteBook = async (id: string, values: InsertNoteBooks) => {
   }
 };
 
-
 export const deleteNotebook = async (id: string) => {
   try {
     await db.delete(notebooks).where(eq(notebooks.id, id));
